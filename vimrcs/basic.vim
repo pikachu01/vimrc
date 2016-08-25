@@ -410,6 +410,17 @@ function! <SID>BufcloseCloseIt()
    endif
 endfunction
 
+" Put plugins and dictionaries in this dir (also on Windows)
+let vimDir = '$HOME/.vim'
+let &runtimepath.=','.vimDir
+
+" Keep undo history across sessions by storing it in a file
+if has('persistent_undo')
+    let myUndoDir = expand(vimDir . '/undodir')
+    let &undodir = myUndoDir
+    set undofile
+endif
+
 au BufNewFile,BufRead *.tsl set filetype=perl
 
 execute pathogen#infect()
